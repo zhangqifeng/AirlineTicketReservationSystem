@@ -56,4 +56,17 @@ public class UserController {
         PageInfo<User> page = userService.selectPage(user, pageNum, pageSize);
         return Result.success(page);
     }
+
+    @GetMapping("/recharge/{account}")
+    public Result recharge(@PathVariable Double account) {
+        userService.recharge(account);
+        return Result.success();
+    }
+
+    @GetMapping("/selectById/{id}")
+    public Result selectById(@PathVariable Integer id) {
+        User user = userService.selectById(id);
+    }
+
 }
+

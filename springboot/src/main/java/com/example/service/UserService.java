@@ -99,4 +99,11 @@ public class UserService {
         dbUser.setPassword(account.getNewPassword());
         userMapper.updateById(dbUser);
     }
+
+    public void recharge(Double account) {
+        Account currentUser = TokenUtils.getCurrentUser();
+        User user = userMapper.selectById(currentUser.getId());
+        user.setAccount(user.getAccount() + account);
+        userMapper.updateById(user);
+    }
 }
