@@ -4,7 +4,7 @@
     <div class="manager-header">
       <div class="manager-header-left">
         <img src="@/assets/imgs/logo.png" />
-        <div class="title">后台管理系统</div>
+        <div class="title">车票预定管理系统</div>
       </div>
 
       <div class="manager-header-center">
@@ -43,6 +43,7 @@
               <i class="el-icon-menu"></i><span>信息管理</span>
             </template>
             <el-menu-item index="/notice">公告信息</el-menu-item>
+            <el-menu-item index="/airticket">飞机票信息</el-menu-item>
           </el-submenu>
 
           <el-submenu index="user">
@@ -50,6 +51,7 @@
               <i class="el-icon-menu"></i><span>用户管理</span>
             </template>
             <el-menu-item index="/admin">管理员信息</el-menu-item>
+            <el-menu-item index="/user">用户信息</el-menu-item>
           </el-submenu>
         </el-menu>
       </div>

@@ -2,6 +2,7 @@
   <div class="main-content">
     <el-card style="width: 50%; margin: 30px auto">
       <div style="text-align: right; margin-bottom: 20px">
+        <el-button type="warning" @click="rechargeInit">充值</el-button>
         <el-button type="primary" @click="updatePassword">修改密码</el-button>
       </div>
       <el-form :model="user" label-width="80px" style="padding-right: 20px">
@@ -12,7 +13,7 @@
               :show-file-list="false"
               :on-success="handleAvatarSuccess"
           >
-            <img v-if="user.avatar" :src="user.avatar" class="avatar" />
+            <img v-if="user.avatar" :src="user.avatar" class="avatar"/>
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
           </el-upload>
         </div>
@@ -28,12 +29,16 @@
         <el-form-item label="邮箱" prop="email">
           <el-input v-model="user.email" placeholder="邮箱"></el-input>
         </el-form-item>
+        <el-form-item label="余额" prop="account">
+          {{ user.account }}
+        </el-form-item>
         <div style="text-align: center; margin-bottom: 20px">
           <el-button type="primary" @click="update">保 存</el-button>
         </div>
       </el-form>
     </el-card>
-    <el-dialog title="修改密码" :visible.sync="dialogVisible" width="30%" :close-on-click-modal="false" destroy-on-close>
+    <el-dialog title="修改密码" :visible.sync="dialogVisible" width="30%" :close-on-click-modal="false"
+               destroy-on-close>
       <el-form :model="user" label-width="80px" style="padding-right: 20px" :rules="rules" ref="formRef">
         <el-form-item label="原始密码" prop="password">
           <el-input show-password v-model="user.password" placeholder="原始密码"></el-input>
@@ -50,6 +55,25 @@
         <el-button type="primary" @click="save">确 定</el-button>
       </div>
     </el-dialog>
+
+    <el-dialog title="个人充值" :visible.sync="rechargeVisible" width="30%" :close-on-click-modal="false"
+               destroy-on-close>
+      <el-form label-width="80px" style="padding-right: 20px">
+        <el-form-item label="充值金额" prop="account">
+          <el-input v-model="account" placeholder="请输入充值金额"></el-input>
+        </el-form-item>
+        <el-form-item label="支付方式" prop="type">
+          <el-radio v-model="type" label="weiPay">微信</el-radio>
+          <el-radio v-model="type" label="aliPay">支付宝</el-radio>
+        </el-form-item>
+
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="fromVisible = false">取 消</el-button>
+        <el-button type="primary" @click="recharge">确 定</el-button>
+      </div>
+    </el-dialog>
+
   </div>
 </template>
 
@@ -68,27 +92,39 @@ export default {
     return {
       user: JSON.parse(localStorage.getItem('xm-user') || '{}'),
       dialogVisible: false,
-
+      rechargeVisible: false,
+      account: null,
+      type: 'weiPay',
       rules: {
         password: [
-          { required: true, message: '请输入原始密码', trigger: 'blur' },
+          {required: true, message: '请输入原始密码', trigger: 'blur'},
         ],
         newPassword: [
-          { required: true, message: '请输入新密码', trigger: 'blur' },
+          {required: true, message: '请输入新密码', trigger: 'blur'},
         ],
         confirmPassword: [
-          { validator: validatePassword, required: true, trigger: 'blur' },
+          {validator: validatePassword, required: true, trigger: 'blur'},
         ],
       }
     }
   },
   created() {
-
+    this.loadUser()
   },
   methods: {
+    loadUser() {
+      this.$request.get('user/selectById/' + this.user.id).then(res => {
+        if (res.code === '200') {
+          this.user = res.data
+          localStorage.setItem('xm-user', JSON.stringify(this.user))
+        } else {
+          this.$message.error(res.msg)
+        }
+      })
+    },
     update() {
       // 保存当前的用户信息到数据库
-      this.$request.put('/admin/update', this.user).then(res => {
+      this.$request.put('/user/update', this.user).then(res => {
         if (res.code === '200') {
           // 成功更新
           this.$message.success('保存成功')
@@ -102,6 +138,7 @@ export default {
         }
       })
     },
+
     handleAvatarSuccess(response, file, fileList) {
       // 把user的头像属性换成上传的图片的链接
       this.$set(this.user, 'avatar', response.data)
@@ -109,6 +146,20 @@ export default {
     // 修改密码
     updatePassword() {
       this.dialogVisible = true
+    },
+    //个人充值
+    rechargeInit() {
+      this.account = 500
+      this.rechargeVisible = true
+    },
+    recharge() {
+      this.$request.get('/user/recharge/' + this.account).then(res => {
+        if (res.code === '200') {
+          this.$message.success('充值成功')
+          this.rechargeVisible = false
+          this.loadUser()
+        }
+      })
     },
     save() {
       this.$refs.formRef.validate((valid) => {
@@ -130,22 +181,35 @@ export default {
 </script>
 
 <style scoped>
-/deep/.el-form-item__label {
+/deep/ .el-form-item__label {
   font-weight: bold;
 }
-/deep/.el-upload {
+
+/deep/ .el-upload {
   border-radius: 50%;
 }
-/deep/.avatar-uploader .el-upload {
+
+/deep/ .avatar-uploader .el-upload {
   border: 1px dashed #d9d9d9;
   cursor: pointer;
   position: relative;
   overflow: hidden;
   border-radius: 50%;
 }
-/deep/.avatar-uploader .el-upload:hover {
+
+/deep/ .avatar-uploader .el-upload:hover {
   border-color: #409EFF;
 }
+
+
+/deep/ .el-radio__original {
+  display: none !important; /* 隐藏原生 radio 输入，但仍然允许交互 */
+}
+
+/deep/ .el-radio:focus:not(.is-focus):not(:active):not(.is-disabled) .el-radio__inner {
+  box-shadow: none !important;
+}
+
 .avatar-uploader-icon {
   font-size: 28px;
   color: #8c939d;
@@ -155,6 +219,7 @@ export default {
   text-align: center;
   border-radius: 50%;
 }
+
 .avatar {
   width: 120px;
   height: 120px;

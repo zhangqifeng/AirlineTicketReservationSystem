@@ -22,6 +22,8 @@ const routes = [
       { path: 'adminPerson', name: 'AdminPerson', meta: { name: '个人信息' }, component: () => import('../views/manager/AdminPerson') },
       { path: 'password', name: 'Password', meta: { name: '修改密码' }, component: () => import('../views/manager/Password') },
       { path: 'notice', name: 'Notice', meta: { name: '公告信息' }, component: () => import('../views/manager/Notice') },
+      { path: 'user', name: 'User', meta: { name: '用户信息' }, component: () => import('../views/manager/User') },
+      { path: 'airticket', name: 'Airticket', meta: { name: '飞机票信息' }, component: () => import('../views/manager/Airticket') },
     ]
   },
   {
@@ -31,7 +33,7 @@ const routes = [
     children: [
       { path: 'home', name: 'Home', meta: { name: '系统首页' }, component: () => import('../views/front/Home') },
       { path: 'person', name: 'Person', meta: { name: '个人信息' }, component: () => import('../views/front/Person') },
-      { path: 'introDetail', name: 'IntroDetail', meta: { name: '攻略详细' }, component: () => import('../views/front/IntroDetail') },
+      { path: 'airTicket', name: 'AirTicket', meta: { name: '机票信息' }, component: () => import('../views/front/AirTicket') },
     ]
   },
   { path: '/login', name: 'Login', meta: { name: '登录' }, component: () => import('../views/Login.vue') },

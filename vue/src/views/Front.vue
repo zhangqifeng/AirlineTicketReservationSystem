@@ -5,14 +5,14 @@
     <div class="front-header">
       <div class="front-header-left">
         <img src="@/assets/imgs/logo.png" alt="">
-        <div class="title">机票/车票预定平台</div>
+        <div class="title">项目前台</div>
       </div>
       <div class="front-header-center">
         <div class="front-header-nav">
           <el-menu :default-active="$route.path" mode="horizontal" router>
 						<el-menu-item index="/front/home">首页</el-menu-item>
-						<el-menu-item index="/front/airTicket">飞机票预订</el-menu-item>
-						<el-menu-item index="/front/trainTicket">火车票预订</el-menu-item>
+						<el-menu-item index="/front/airTicket">飞机票预定</el-menu-item>
+						<el-menu-item index="/front/trainTicket">火车票预定</el-menu-item>
 						<el-menu-item index="/front/busTicket">汽车票预定</el-menu-item>
 						<el-menu-item index="/front/travel">旅游攻略</el-menu-item>
 						<el-menu-item index="/front/person">个人中心</el-menu-item>

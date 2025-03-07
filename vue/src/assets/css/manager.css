@@ -9,7 +9,7 @@
 }
 
 .manager-header-left {
-    width: 200px;
+    width: 260px;
     height: 60px;
     padding-left: 10px;
     display: flex;
@@ -17,8 +17,9 @@
 }
 
 .manager-header-left img {
-    width: 40px;
-    height: 40px;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
 }
 
 .manager-header-left .title {

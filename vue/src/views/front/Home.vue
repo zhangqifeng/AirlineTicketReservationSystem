@@ -10,7 +10,7 @@
     <div style="width: 70%; margin: 40px auto; font-size: 22px; color: #666666">专业平台，放心预定</div>
     <div style="width: 50%; margin: 20px auto; display: flex">
       <div style="flex: 1; text-align: center">
-        <img src="@/assets/imgs/飞机票.png" alt="" style="height: 100px; width: 100px; cursor: pointer">
+        <img src="@/assets/imgs/飞机票.png" alt="" style="height: 100px; width: 100px; cursor: pointer" @click="$router.push('/front/airTicket')">
         <div style="margin-top: 10px; font-size: 16px; color: #404144">飞机票预订</div>
       </div>
       <div style="flex: 1; text-align: center">
@@ -28,7 +28,29 @@
     <div style="width: 70%; margin: 20px auto; min-height: 300px">
       <el-row :gutter="20">
         <el-col :span="6">
-          <img src="@/assets/imgs/山西人家.jpg" alt="" style="height: 160px; width: 100%; cursor:pointer; border-radius: 5px">
+          <img src="@/assets/imgs/山西人家.jpg" alt=""
+               style="height: 160px; width: 100%; cursor:pointer; border-radius: 5px">
+          <div style="margin-top: 10px; font-size: 15px; color: #666666" class="overflowShow">
+            山西省晋城市高平市【山西人家】
+          </div>
+        </el-col>
+        <el-col :span="6">
+          <img src="@/assets/imgs/山水人家.jpg" alt=""
+               style="height: 160px; width: 100%; cursor:pointer; border-radius: 5px">
+          <div style="margin-top: 10px; font-size: 15px; color: #666666" class="overflowShow">
+            山西省晋城市高平市【山西人家】
+          </div>
+        </el-col>
+        <el-col :span="6">
+          <img src="@/assets/imgs/山西人家.jpg" alt=""
+               style="height: 160px; width: 100%; cursor:pointer; border-radius: 5px">
+          <div style="margin-top: 10px; font-size: 15px; color: #666666" class="overflowShow">
+            山西省晋城市高平市【山西人家】
+          </div>
+        </el-col>
+        <el-col :span="6">
+          <img src="@/assets/imgs/山水人家.jpg" alt=""
+               style="height: 160px; width: 100%; cursor:pointer; border-radius: 5px">
           <div style="margin-top: 10px; font-size: 15px; color: #666666" class="overflowShow">
             山西省晋城市高平市【山西人家】
           </div>
@@ -45,18 +67,17 @@ export default {
   data() {
     return {
       carouselData: [
-          require('@/assets/imgs/lun-1.jpg'),
-          require('@/assets/imgs/lun-2.jpg'),
+        require('@/assets/imgs/lun-1.jpg'),
+        require('@/assets/imgs/lun-2.jpg'),
       ]
+
     }
   },
   mounted() {
 
   },
   // methods：本页面所有的点击事件或者其他函数定义区
-  methods: {
-
-  }
+  methods: {}
 }
 </script>
 <style>
